@@ -1,0 +1,30 @@
+{
+  "name": "landlord-tenant-management",
+  "version": "1.0.0",
+  "description": "Full-stack Landlord-Tenant Management System",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd backend && npm run dev",
+    "client": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "start": "concurrently \"npm run server:start\" \"npm run client:preview\"",
+    "server:start": "cd backend && npm start",
+    "client:preview": "cd frontend && npm run preview",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "setup": "npm run install:all && npm run dev"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "keywords": [
+    "landlord",
+    "tenant",
+    "property-management",
+    "react",
+    "node.js",
+    "express",
+    "sqlite"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}
