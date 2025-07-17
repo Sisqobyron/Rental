@@ -16,7 +16,14 @@ import {
   Paper,
   useTheme,
   useMediaQuery,
-  Chip
+  Chip,
+  AppBar,
+  Toolbar,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Divider
 } from '@mui/material';
 import {
   Home,
@@ -30,7 +37,18 @@ import {
   Phone,
   Email,
   LocationOn,
-  CheckCircleRounded
+  CheckCircleRounded,
+  Login,
+  PersonAdd,
+  Menu,
+  Dashboard,
+  Apartment,
+  MonetizationOn,
+  Speed,
+  Shield,
+  Analytics,
+  Support,
+  Groups
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { styled, keyframes } from '@mui/material/styles';
@@ -102,6 +120,25 @@ const StatsCard = styled(Paper)(({ theme }) => ({
   }
 }));
 
+const NavigationBar = styled(AppBar)(({ theme }) => ({
+  backgroundColor: 'rgba(255, 255, 255, 0.95)',
+  backdropFilter: 'blur(10px)',
+  boxShadow: '0 2px 20px rgba(0,0,0,0.1)',
+  color: theme.palette.text.primary,
+}));
+
+const InfoGraphicCard = styled(Card)(({ theme }) => ({
+  height: '100%',
+  background: `linear-gradient(135deg, ${theme.palette.primary.main}10, ${theme.palette.secondary.main}10)`,
+  border: `2px solid ${theme.palette.primary.main}20`,
+  transition: 'all 0.3s ease-in-out',
+  '&:hover': {
+    transform: 'translateY(-5px)',
+    boxShadow: theme.shadows[12],
+    borderColor: theme.palette.primary.main,
+  }
+}));
+
 const Landing = () => {
   const navigate = useNavigate();
   const theme = useTheme();
@@ -161,10 +198,62 @@ const Landing = () => {
   ];
 
   const stats = [
-    { number: '1000+', label: 'Properties Listed', icon: <Home /> },
-    { number: '5000+', label: 'Happy Tenants', icon: <StarRounded /> },
-    { number: '500+', label: 'Landlords', icon: <SecurityRounded /> },
-    { number: '99.9%', label: 'Uptime', icon: <TrendingUpRounded /> }
+    { number: '2,500+', label: 'Properties Listed', icon: <Home />, color: '#2196F3' },
+    { number: '8,000+', label: 'Happy Tenants', icon: <Groups />, color: '#4CAF50' },
+    { number: '1,200+', label: 'Verified Landlords', icon: <SecurityRounded />, color: '#FF9800' },
+    { number: '99.9%', label: 'Platform Uptime', icon: <TrendingUpRounded />, color: '#9C27B0' }
+  ];
+
+  const infographics = [
+    {
+      icon: <Speed />,
+      title: 'Lightning Fast',
+      description: 'Find properties in under 30 seconds',
+      stat: '30 sec',
+      color: '#FF6B6B'
+    },
+    {
+      icon: <Shield />,
+      title: 'Secure Transactions',
+      description: 'Bank-level security for all payments',
+      stat: '256-bit SSL',
+      color: '#4ECDC4'
+    },
+    {
+      icon: <Analytics />,
+      title: 'Smart Analytics',
+      description: 'AI-powered market insights',
+      stat: '95% accuracy',
+      color: '#45B7D1'
+    },
+    {
+      icon: <Support />,
+      title: '24/7 Support',
+      description: 'Round-the-clock customer service',
+      stat: '< 2hr response',
+      color: '#96CEB4'
+    }
+  ];
+
+  const processSteps = [
+    {
+      step: '01',
+      title: 'Create Account',
+      description: 'Sign up as a landlord or tenant in minutes',
+      icon: <PersonAdd />
+    },
+    {
+      step: '02', 
+      title: 'List or Search',
+      description: 'Post your property or browse available rentals',
+      icon: <SearchRounded />
+    },
+    {
+      step: '03',
+      title: 'Connect & Manage',
+      description: 'Connect with tenants/landlords and manage everything online',
+      icon: <Dashboard />
+    }
   ];
 
   const testimonials = [
@@ -193,8 +282,60 @@ const Landing = () => {
 
   return (
     <Box>
+      {/* Navigation Header */}
+      <NavigationBar position="fixed" elevation={0}>
+        <Toolbar sx={{ justifyContent: 'space-between' }}>
+          <Typography variant="h6" fontWeight="bold" color="primary">
+            🏠 RentEase Cameroon
+          </Typography>
+          <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+            <Button 
+              color="inherit" 
+              onClick={() => navigate('/properties')}
+              sx={{ textTransform: 'none' }}
+            >
+              Browse Properties
+            </Button>
+            <Button 
+              color="inherit" 
+              onClick={() => navigate('/auth')}
+              sx={{ textTransform: 'none' }}
+            >
+              For Landlords
+            </Button>
+            <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
+            <Button
+              variant="outlined"
+              size="small"
+              startIcon={<Login />}
+              onClick={() => navigate('/login')}
+              sx={{ 
+                textTransform: 'none',
+                borderRadius: '20px',
+                px: 2
+              }}
+            >
+              Login
+            </Button>
+            <Button
+              variant="contained"
+              size="small"
+              startIcon={<PersonAdd />}
+              onClick={() => navigate('/register')}
+              sx={{ 
+                textTransform: 'none',
+                borderRadius: '20px',
+                px: 2
+              }}
+            >
+              Sign Up
+            </Button>
+          </Box>
+        </Toolbar>
+      </NavigationBar>
+
       {/* Hero Section */}
-      <HeroSection>
+      <HeroSection sx={{ pt: 10 }}>
         {/* Floating Background Icons */}
         <FloatingIcon sx={{ top: '10%', left: '10%', animationDelay: '0s' }}>
           <Home fontSize="inherit" />
@@ -215,9 +356,9 @@ const Landing = () => {
               <Fade in={visible.hero} timeout={1000}>
                 <Box>
                   <Chip 
-                    label="🏠 #1 Property Management Platform in Cameroon" 
+                    label="� #1 Property Management Platform in Cameroon" 
                     color="secondary" 
-                    sx={{ mb: 3, fontSize: '0.9rem' }}
+                    sx={{ mb: 3, fontSize: '0.9rem', fontWeight: 'bold' }}
                   />
                   <Typography 
                     variant={isMobile ? "h3" : "h2"} 
@@ -235,38 +376,57 @@ const Landing = () => {
                     }}>
                       Rental Home
                     </Box>
+                    in Cameroon
                   </Typography>
                   <Typography 
                     variant="h6" 
                     color="rgba(255,255,255,0.9)" 
                     paragraph
-                    sx={{ maxWidth: 500 }}
+                    sx={{ maxWidth: 500, lineHeight: 1.6 }}
                   >
-                    Connect landlords and tenants seamlessly. Manage properties, track payments, 
-                    and handle maintenance requests all in one powerful platform.
+                    Connect landlords and tenants seamlessly across Douala, Yaoundé, and all major cities. 
+                    Manage properties, track payments, and handle maintenance requests all in one powerful platform.
                   </Typography>
+                  
+                  {/* Key Benefits */}
+                  <Box sx={{ my: 3 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                      <CheckCircleRounded sx={{ color: '#4CAF50', mr: 1, fontSize: '1.2rem' }} />
+                      <Typography color="rgba(255,255,255,0.9)">Verified landlords and properties</Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                      <CheckCircleRounded sx={{ color: '#4CAF50', mr: 1, fontSize: '1.2rem' }} />
+                      <Typography color="rgba(255,255,255,0.9)">Secure online payments</Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                      <CheckCircleRounded sx={{ color: '#4CAF50', mr: 1, fontSize: '1.2rem' }} />
+                      <Typography color="rgba(255,255,255,0.9)">24/7 customer support</Typography>
+                    </Box>
+                  </Box>
+
                   <Box sx={{ mt: 4, display: 'flex', gap: 2, flexWrap: 'wrap' }}>
                     <Button
                       variant="contained"
                       size="large"
                       color="secondary"
                       endIcon={<KeyboardArrowRight />}
-                      onClick={() => navigate('/properties')}
+                      onClick={() => navigate('/register')}
                       sx={{ 
                         borderRadius: '25px',
                         px: 4,
                         py: 1.5,
                         fontSize: '1.1rem',
                         textTransform: 'none',
-                        boxShadow: '0 8px 25px rgba(0,0,0,0.3)'
+                        boxShadow: '0 8px 25px rgba(0,0,0,0.3)',
+                        fontWeight: 'bold'
                       }}
                     >
-                      Browse Properties
+                      Get Started Free
                     </Button>
                     <Button
                       variant="outlined"
                       size="large"
-                      onClick={() => navigate('/auth')}
+                      onClick={() => navigate('/properties')}
                       sx={{ 
                         borderRadius: '25px',
                         px: 4,
@@ -281,7 +441,7 @@ const Landing = () => {
                         }
                       }}
                     >
-                      Get Started
+                      Browse Properties
                     </Button>
                   </Box>
                 </Box>
@@ -327,22 +487,32 @@ const Landing = () => {
         </Container>
       </HeroSection>
 
-      {/* Stats Section */}
+      {/* Enhanced Stats Section */}
       <Box sx={{ py: 8, backgroundColor: '#f8f9fa' }}>
         <Container maxWidth="lg">
+          <Fade in={visible.stats} timeout={1000}>
+            <Box sx={{ textAlign: 'center', mb: 6 }}>
+              <Typography variant="h4" fontWeight="bold" gutterBottom>
+                Trusted by Thousands Across Cameroon
+              </Typography>
+              <Typography variant="h6" color="text.secondary">
+                Join the largest property management community in Central Africa
+              </Typography>
+            </Box>
+          </Fade>
           <Fade in={visible.stats} timeout={1000}>
             <Grid container spacing={4}>
               {stats.map((stat, index) => (
                 <Grid item xs={6} md={3} key={index}>
                   <Zoom in={visible.stats} timeout={800 + index * 200}>
                     <StatsCard>
-                      <Box sx={{ color: 'primary.main', mb: 1 }}>
+                      <Box sx={{ color: stat.color, mb: 2, fontSize: '3rem' }}>
                         {stat.icon}
                       </Box>
-                      <Typography variant="h4" fontWeight="bold" color="primary">
+                      <Typography variant="h4" fontWeight="bold" color="primary" gutterBottom>
                         {stat.number}
                       </Typography>
-                      <Typography variant="body1" color="text.secondary">
+                      <Typography variant="body1" color="text.secondary" fontWeight={500}>
                         {stat.label}
                       </Typography>
                     </StatsCard>
@@ -351,6 +521,115 @@ const Landing = () => {
               ))}
             </Grid>
           </Fade>
+        </Container>
+      </Box>
+
+      {/* Infographics Section */}
+      <Box sx={{ py: 10, backgroundColor: 'white' }}>
+        <Container maxWidth="lg">
+          <Fade in={visible.features} timeout={1000}>
+            <Box sx={{ textAlign: 'center', mb: 8 }}>
+              <Typography variant="h3" fontWeight="bold" gutterBottom>
+                Platform Performance
+              </Typography>
+              <Typography variant="h6" color="text.secondary" sx={{ maxWidth: 600, mx: 'auto' }}>
+                Real metrics that matter to your rental experience
+              </Typography>
+            </Box>
+          </Fade>
+          
+          <Grid container spacing={4}>
+            {infographics.map((item, index) => (
+              <Grid item xs={12} sm={6} lg={3} key={index}>
+                <Slide 
+                  direction="up" 
+                  in={visible.features} 
+                  timeout={600 + index * 100}
+                >
+                  <InfoGraphicCard>
+                    <CardContent sx={{ p: 4, textAlign: 'center' }}>
+                      <Avatar 
+                        sx={{ 
+                          width: 70, 
+                          height: 70, 
+                          bgcolor: item.color, 
+                          mx: 'auto', 
+                          mb: 3
+                        }}
+                      >
+                        {React.cloneElement(item.icon, { sx: { fontSize: '2rem' } })}
+                      </Avatar>
+                      <Typography variant="h3" fontWeight="bold" color={item.color} gutterBottom>
+                        {item.stat}
+                      </Typography>
+                      <Typography variant="h6" fontWeight="bold" gutterBottom>
+                        {item.title}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {item.description}
+                      </Typography>
+                    </CardContent>
+                  </InfoGraphicCard>
+                </Slide>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </Box>
+
+      {/* How It Works Section */}
+      <Box sx={{ py: 10, backgroundColor: '#f8f9fa' }}>
+        <Container maxWidth="lg">
+          <Fade in={visible.features} timeout={1000}>
+            <Box sx={{ textAlign: 'center', mb: 8 }}>
+              <Typography variant="h3" fontWeight="bold" gutterBottom>
+                How It Works
+              </Typography>
+              <Typography variant="h6" color="text.secondary">
+                Get started in 3 simple steps
+              </Typography>
+            </Box>
+          </Fade>
+          
+          <Grid container spacing={6} alignItems="center">
+            {processSteps.map((step, index) => (
+              <Grid item xs={12} md={4} key={index}>
+                <Fade in={visible.features} timeout={800 + index * 200}>
+                  <Box sx={{ textAlign: 'center' }}>
+                    <Box sx={{ position: 'relative', mb: 3 }}>
+                      <Avatar 
+                        sx={{ 
+                          width: 80, 
+                          height: 80, 
+                          bgcolor: 'primary.main', 
+                          mx: 'auto',
+                          fontSize: '1.5rem',
+                          fontWeight: 'bold'
+                        }}
+                      >
+                        {step.step}
+                      </Avatar>
+                      <Box sx={{ 
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        zIndex: 1
+                      }}>
+                        {step.icon}
+                      </Box>
+                    </Box>
+                    <Typography variant="h5" fontWeight="bold" gutterBottom>
+                      {step.title}
+                    </Typography>
+                    <Typography variant="body1" color="text.secondary">
+                      {step.description}
+                    </Typography>
+                  </Box>
+                </Fade>
+              </Grid>
+            ))}
+          </Grid>
         </Container>
       </Box>
 
@@ -464,7 +743,7 @@ const Landing = () => {
         </Container>
       </Box>
 
-      {/* CTA Section */}
+      {/* Enhanced CTA Section */}
       <Box sx={{ 
         py: 10, 
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -474,27 +753,77 @@ const Landing = () => {
           <Fade in={visible.testimonials} timeout={1200}>
             <Box sx={{ textAlign: 'center' }}>
               <Typography variant="h3" fontWeight="bold" gutterBottom>
-                Ready to Get Started?
+                Ready to Transform Your Rental Experience?
               </Typography>
-              <Typography variant="h6" paragraph sx={{ opacity: 0.9 }}>
+              <Typography variant="h6" paragraph sx={{ opacity: 0.9, mb: 4 }}>
                 Join thousands of landlords and tenants who trust our platform
               </Typography>
-              <Box sx={{ mt: 4, display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
+              
+              {/* Role-based CTAs */}
+              <Grid container spacing={4} sx={{ mb: 4 }}>
+                <Grid item xs={12} md={6}>
+                  <Paper sx={{ p: 3, textAlign: 'center', bgcolor: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(10px)' }}>
+                    <Apartment sx={{ fontSize: '3rem', color: '#FFD700', mb: 2 }} />
+                    <Typography variant="h5" fontWeight="bold" gutterBottom>
+                      For Landlords
+                    </Typography>
+                    <Typography variant="body1" paragraph sx={{ opacity: 0.9 }}>
+                      List properties, manage tenants, track payments
+                    </Typography>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      fullWidth
+                      onClick={() => navigate('/register?role=landlord')}
+                      sx={{ mt: 2, borderRadius: '25px', py: 1.5 }}
+                    >
+                      Start Listing Properties
+                    </Button>
+                  </Paper>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Paper sx={{ p: 3, textAlign: 'center', bgcolor: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(10px)' }}>
+                    <SearchRounded sx={{ fontSize: '3rem', color: '#FFD700', mb: 2 }} />
+                    <Typography variant="h5" fontWeight="bold" gutterBottom>
+                      For Tenants
+                    </Typography>
+                    <Typography variant="body1" paragraph sx={{ opacity: 0.9 }}>
+                      Find your perfect home, make payments, request maintenance
+                    </Typography>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      fullWidth
+                      onClick={() => navigate('/register?role=tenant')}
+                      sx={{ mt: 2, borderRadius: '25px', py: 1.5 }}
+                    >
+                      Find Your Home
+                    </Button>
+                  </Paper>
+                </Grid>
+              </Grid>
+
+              <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
                 <Button
-                  variant="contained"
+                  variant="outlined"
                   size="large"
-                  color="secondary"
-                  onClick={() => navigate('/auth')}
+                  startIcon={<Login />}
+                  onClick={() => navigate('/login')}
                   sx={{ 
                     borderRadius: '25px',
                     px: 4,
                     py: 1.5,
                     fontSize: '1.1rem',
                     textTransform: 'none',
-                    boxShadow: '0 8px 25px rgba(0,0,0,0.3)'
+                    borderColor: 'white',
+                    color: 'white',
+                    '&:hover': {
+                      borderColor: 'white',
+                      backgroundColor: 'rgba(255,255,255,0.1)'
+                    }
                   }}
                 >
-                  Start Free Trial
+                  Already have an account? Login
                 </Button>
                 <Button
                   variant="outlined"
@@ -514,7 +843,7 @@ const Landing = () => {
                     }
                   }}
                 >
-                  View Properties
+                  Browse Properties First
                 </Button>
               </Box>
             </Box>
@@ -522,16 +851,17 @@ const Landing = () => {
         </Container>
       </Box>
 
-      {/* Footer */}
+      {/* Enhanced Footer */}
       <Box sx={{ py: 6, backgroundColor: '#1a1a1a', color: 'white' }}>
         <Container maxWidth="lg">
           <Grid container spacing={4}>
             <Grid item xs={12} md={4}>
               <Typography variant="h5" fontWeight="bold" gutterBottom>
-                RentEase Cameroon
+                🏠 RentEase Cameroon
               </Typography>
               <Typography variant="body2" paragraph sx={{ opacity: 0.8 }}>
-                Your trusted partner for property management and rental solutions across Cameroon.
+                Your trusted partner for property management and rental solutions across Cameroon. 
+                Connecting landlords and tenants since 2024.
               </Typography>
               <Box sx={{ display: 'flex', gap: 1 }}>
                 <IconButton color="inherit" size="small">
@@ -549,17 +879,53 @@ const Landing = () => {
               <Grid container spacing={4}>
                 <Grid item xs={6} md={3}>
                   <Typography variant="h6" gutterBottom>
+                    Get Started
+                  </Typography>
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                    <Button 
+                      color="inherit" 
+                      onClick={() => navigate('/register')}
+                      sx={{ justifyContent: 'flex-start', textTransform: 'none' }}
+                    >
+                      Sign Up Free
+                    </Button>
+                    <Button 
+                      color="inherit" 
+                      onClick={() => navigate('/login')}
+                      sx={{ justifyContent: 'flex-start', textTransform: 'none' }}
+                    >
+                      Login
+                    </Button>
+                    <Button 
+                      color="inherit" 
+                      onClick={() => navigate('/properties')}
+                      sx={{ justifyContent: 'flex-start', textTransform: 'none' }}
+                    >
+                      Browse Properties
+                    </Button>
+                  </Box>
+                </Grid>
+                <Grid item xs={6} md={3}>
+                  <Typography variant="h6" gutterBottom>
                     Platform
                   </Typography>
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                    <Button color="inherit" sx={{ justifyContent: 'flex-start', textTransform: 'none' }}>
+                    <Button 
+                      color="inherit" 
+                      onClick={() => navigate('/register?role=landlord')}
+                      sx={{ justifyContent: 'flex-start', textTransform: 'none' }}
+                    >
                       For Landlords
                     </Button>
-                    <Button color="inherit" sx={{ justifyContent: 'flex-start', textTransform: 'none' }}>
+                    <Button 
+                      color="inherit" 
+                      onClick={() => navigate('/register?role=tenant')}
+                      sx={{ justifyContent: 'flex-start', textTransform: 'none' }}
+                    >
                       For Tenants
                     </Button>
                     <Button color="inherit" sx={{ justifyContent: 'flex-start', textTransform: 'none' }}>
-                      Property Search
+                      Mobile App
                     </Button>
                   </Box>
                 </Grid>
@@ -595,29 +961,37 @@ const Landing = () => {
                     </Button>
                   </Box>
                 </Grid>
-                <Grid item xs={6} md={3}>
-                  <Typography variant="h6" gutterBottom>
-                    Legal
-                  </Typography>
-                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                    <Button color="inherit" sx={{ justifyContent: 'flex-start', textTransform: 'none' }}>
-                      Privacy Policy
-                    </Button>
-                    <Button color="inherit" sx={{ justifyContent: 'flex-start', textTransform: 'none' }}>
-                      Terms of Service
-                    </Button>
-                    <Button color="inherit" sx={{ justifyContent: 'flex-start', textTransform: 'none' }}>
-                      Cookie Policy
-                    </Button>
-                  </Box>
-                </Grid>
               </Grid>
             </Grid>
           </Grid>
-          <Box sx={{ mt: 4, pt: 4, borderTop: '1px solid rgba(255,255,255,0.1)', textAlign: 'center' }}>
-            <Typography variant="body2" sx={{ opacity: 0.6 }}>
-              © 2025 RentEase Cameroon. All rights reserved.
-            </Typography>
+          <Box sx={{ mt: 4, pt: 4, borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+            <Grid container spacing={2} alignItems="center">
+              <Grid item xs={12} md={6}>
+                <Typography variant="body2" sx={{ opacity: 0.6 }}>
+                  © 2025 RentEase Cameroon. All rights reserved.
+                </Typography>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <Box sx={{ display: 'flex', gap: 2, justifyContent: { xs: 'center', md: 'flex-end' } }}>
+                  <Button 
+                    color="inherit" 
+                    size="small"
+                    onClick={() => navigate('/privacy')}
+                    sx={{ textTransform: 'none', opacity: 0.6 }}
+                  >
+                    Privacy Policy
+                  </Button>
+                  <Button 
+                    color="inherit" 
+                    size="small"
+                    onClick={() => navigate('/terms')}
+                    sx={{ textTransform: 'none', opacity: 0.6 }}
+                  >
+                    Terms of Service
+                  </Button>
+                </Box>
+              </Grid>
+            </Grid>
           </Box>
         </Container>
       </Box>
