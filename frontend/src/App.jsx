@@ -18,6 +18,7 @@ import Payments from './pages/Payments';
 import Maintenance from './pages/Maintenance';
 import PropertySearch from './pages/PropertySearch';
 import Messages from './pages/Messages';
+import LegalAgreements from './pages/LegalAgreements';
 import { Box, CircularProgress } from '@mui/material';
 
 const theme = createTheme({
@@ -248,6 +249,16 @@ const AppRoutes = () => {
           <ProtectedRoute>
             <Layout>
               <Messages />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/legal-agreements"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <LegalAgreements />
             </Layout>
           </ProtectedRoute>
         }

@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 
 // Import routes
 const authRoutes = require('./routes/auth');
@@ -10,6 +11,7 @@ const paymentRoutes = require('./routes/payments');
 const maintenanceRoutes = require('./routes/maintenance');
 const dashboardRoutes = require('./routes/dashboard');
 const messageRoutes = require('./routes/messages');
+const legalAgreementRoutes = require('./routes/legalAgreements');
 
 // Import database to initialize tables
 require('./utils/database');
@@ -21,6 +23,9 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
+// Serve static files from uploads directory
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/properties', propertyRoutes);
@@ -28,6 +33,8 @@ app.use('/api/tenants', tenantRoutes);
 app.use('/api/rent-payments', paymentRoutes);
 app.use('/api/maintenance-requests', maintenanceRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/messages', messageRoutes);
+app.use('/api/legal-agreements', legalAgreementRoutes);
 app.use('/api/messages', messageRoutes);
 
 // Health check endpoint

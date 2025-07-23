@@ -31,11 +31,25 @@ export const auth = {
 export const properties = {
   getAll: () => api.get('/properties'),
   create: (propertyData) => api.post('/properties', propertyData),
+  createWithImages: (formData) => api.post('/properties', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  }),
   update: (id, propertyData) => api.put(`/properties/${id}`, propertyData),
   delete: (id) => api.delete(`/properties/${id}`),
   getById: (id) => api.get(`/properties/${id}`),
   search: (filters) => api.get('/properties/search', { params: filters }),
   getAvailable: () => api.get('/properties/available'),
+  // Image management
+  getImages: (propertyId) => api.get(`/properties/${propertyId}/images`),
+  uploadImages: (propertyId, formData) => api.post(`/properties/${propertyId}/images`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  }),
+  deleteImage: (propertyId, imageId) => api.delete(`/properties/${propertyId}/images/${imageId}`),
+  setPrimaryImage: (propertyId, imageId) => api.put(`/properties/${propertyId}/images/${imageId}/primary`),
 };
 
 // Tenants API
@@ -77,6 +91,17 @@ export const messages = {
   markAsRead: (messageId) => api.patch(`/messages/${messageId}/read`),
   getUnreadCount: () => api.get('/messages/unread-count'),
   getLandlords: () => api.get('/messages/landlords'),
+};
+
+// Legal Agreements API
+export const legalAgreements = {
+  getAll: (propertyId) => api.get('/legal-agreements', { params: { propertyId } }),
+  create: (agreementData) => api.post('/legal-agreements', agreementData),
+  getById: (id) => api.get(`/legal-agreements/${id}`),
+  update: (id, agreementData) => api.put(`/legal-agreements/${id}`, agreementData),
+  delete: (id) => api.delete(`/legal-agreements/${id}`),
+  sign: (id) => api.post(`/legal-agreements/${id}/sign`),
+  getTemplate: () => api.get('/legal-agreements/template'),
 };
 
 // Export the main api instance

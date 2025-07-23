@@ -1,5 +1,6 @@
 const database = require('../utils/database');
 const connectionPool = require('../utils/connectionPool');
+const PropertyImage = require('./PropertyImage');
 
 // In-memory cache with TTL
 class PropertyCache {
@@ -207,6 +208,61 @@ class Property {
         }
       });
     });
+  }
+
+  // Image-related methods
+  static async findWithImages() {
+    try {
+      const properties = await this.findAll();
+      
+      for (let property of properties) {
+        property.images = await PropertyImage.findByPropertyId(property.id);
+      }
+      
+      return properties;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async findByIdWithImages(id) {
+    try {
+      const property = await this.findById(id);
+      if (property) {
+        property.images = await PropertyImage.findByPropertyId(id);
+      }
+      return property;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async findByLandlordWithImages(landlordId) {
+    try {
+      const properties = await this.findByLandlord(landlordId);
+      
+      for (let property of properties) {
+        property.images = await PropertyImage.findByPropertyId(property.id);
+      }
+      
+      return properties;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async searchPropertiesWithImages(filters = {}) {
+    try {
+      const properties = await this.searchProperties(filters);
+      
+      for (let property of properties) {
+        property.images = await PropertyImage.findByPropertyId(property.id);
+      }
+      
+      return properties;
+    } catch (error) {
+      throw error;
+    }
   }
 }
 

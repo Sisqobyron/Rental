@@ -46,6 +46,20 @@ class Tenant {
     return new Promise((resolve, reject) => {
       const db = database.getDb();
       
+      db.all('SELECT * FROM tenants WHERE user_id = ?', [userId], (err, tenants) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(tenants);
+        }
+      });
+    });
+  }
+
+  static findActiveByUserId(userId) {
+    return new Promise((resolve, reject) => {
+      const db = database.getDb();
+      
       db.get('SELECT * FROM tenants WHERE user_id = ? AND status = "active"', [userId], (err, tenant) => {
         if (err) {
           reject(err);

@@ -24,7 +24,7 @@ class MaintenanceController {
       const { issue, description, priority, title, tenantName, propertyId, category } = req.body;
       
       // Get tenant record for current user
-      const tenant = await Tenant.findByUserId(req.user.id);
+      const tenant = await Tenant.findActiveByUserId(req.user.id);
       if (!tenant) {
         return res.status(404).json({ error: 'No active rental found' });
       }

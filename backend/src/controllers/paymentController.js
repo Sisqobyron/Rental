@@ -23,8 +23,8 @@ class PaymentController {
     try {
       const { amount, paymentDate, paymentMonth, paymentMethod } = req.body;
       
-      // Get tenant record for current user
-      const tenant = await Tenant.findByUserId(req.user.id);
+      // Get active tenant record for current user
+      const tenant = await Tenant.findActiveByUserId(req.user.id);
       if (!tenant) {
         return res.status(404).json({ error: 'No active rental found' });
       }

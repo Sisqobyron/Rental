@@ -31,6 +31,7 @@ import {
   AccountCircle,
   Message as MessageIcon,
   Search as SearchIcon,
+  Gavel as LegalIcon,
 } from '@mui/icons-material';
 
 const drawerWidth = 240;
@@ -68,6 +69,7 @@ const Layout = ({ children }) => {
     { icon: PeopleIcon, label: 'Tenants', path: '/tenants' },
     { icon: PaymentIcon, label: 'Payments', path: '/payments' },
     { icon: BuildIcon, label: 'Maintenance', path: '/maintenance' },
+    { icon: LegalIcon, label: 'Legal Agreements', path: '/legal-agreements' },
     { icon: MessageIcon, label: 'Messages', path: '/messages' },
   ];
 
@@ -76,6 +78,7 @@ const Layout = ({ children }) => {
     { icon: SearchIcon, label: 'Search Properties', path: '/properties' },
     { icon: PaymentIcon, label: 'Pay Rent', path: '/payments' },
     { icon: BuildIcon, label: 'Maintenance', path: '/maintenance' },
+    { icon: LegalIcon, label: 'Legal Agreements', path: '/legal-agreements' },
     { icon: MessageIcon, label: 'Messages', path: '/messages' },
   ];
 

@@ -94,6 +94,44 @@ class Database {
         FOREIGN KEY (receiver_id) REFERENCES users(id),
         FOREIGN KEY (property_id) REFERENCES properties(id)
       )`);
+
+      // Property images table
+      this.db.run(`CREATE TABLE IF NOT EXISTS property_images (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        property_id INTEGER NOT NULL,
+        image_path TEXT NOT NULL,
+        image_name TEXT NOT NULL,
+        is_primary BOOLEAN DEFAULT 0,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE
+      )`);
+
+      // Legal agreements table
+      this.db.run(`CREATE TABLE IF NOT EXISTS legal_agreements (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        tenant_id INTEGER NOT NULL,
+        property_id INTEGER NOT NULL,
+        agreement_type TEXT DEFAULT 'lease' CHECK(agreement_type IN ('lease', 'amendment', 'termination')),
+        rent_due_day INTEGER DEFAULT 1,
+        late_fee_amount DECIMAL(10,2) DEFAULT 0.00,
+        late_fee_grace_days INTEGER DEFAULT 5,
+        security_deposit_terms TEXT,
+        property_damage_policy TEXT,
+        maintenance_responsibility TEXT,
+        termination_notice_days INTEGER DEFAULT 30,
+        pet_policy TEXT,
+        smoking_policy TEXT DEFAULT 'No smoking allowed',
+        guest_policy TEXT,
+        utilities_included TEXT,
+        parking_details TEXT,
+        additional_terms TEXT,
+        landlord_signature BOOLEAN DEFAULT 0,
+        tenant_signature BOOLEAN DEFAULT 0,
+        signed_date DATETIME,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (tenant_id) REFERENCES tenants(id) ON DELETE CASCADE,
+        FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE
+      )`);
     });
   }
 
